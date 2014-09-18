@@ -1,0 +1,38 @@
+<ion-view title="Détails">
+	<ion-nav-buttons side="right">
+    <a class="button button-icon icon ion-edit" href="#/app/add/{{vm.item.id}}"></a>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+	  <div class="bg6">
+	  </div>
+		<div class="list card">
+		  <div class="item item-avatar">
+		    <img ng-src="{{ vm.item.picture }}" ng-click="vm.showPic = true">
+		    <h2>{{ vm.item.title }}, {{ vm.item.producer }} <wine-color type="vm.item.type" number="vm.item.number"></wine-color></h2>
+		    <p>
+		    	{{ vm.item.appellation }}<br>
+		    	Millesime {{ vm.item.millesime || 'NA' }} - Région: {{ vm.item.region || 'NA' }}<br>
+		    	Cépage: {{vm.item.cepage || 'NA' }}
+		    </p>
+		    <p>
+		    	<star-rating rating="vm.item.stars"></star-rating> <br>
+		    	<good-drink start="vm.item.best_start" end="vm.item.best_end"></good-drink>
+		    </p>
+		  </div>
+	    <div class="button-bar">
+			  <div class="button" ng-class="{'assertive': vm.item.star}" ng-click="vm.star(vm.item.id)"><i class="ion-heart"></i></div>
+			  <div class="button" ng-click="vm.drink(vm.item.id)">+ <i class="ion-wineglass"></i></div>
+			  <div class="button" ng-click="vm.delete(vm.item.id)"><i class="ion-trash-b"></i></div>
+			</div>
+		  <div class="item item-body">
+		  	<h3><i class="icon ion-cash"></i> Prix : {{ vm.item.price || '-' }} €</h3>
+		  	<h3><i class="icon ion-beaker"></i> Alcool : {{ vm.item.alcool || 'NA' }} %</h3>
+		  	<h3><i class="ion-pound"></i> Commentaires :</h3>
+		  	<p>{{ vm.item.comment || '-' }}</p>
+		  </div>
+		</div>
+  </ion-content>
+</ion-view>
+<div class="img-big" ng-show="vm.showPic" ng-click="vm.showPic = false">
+	<img ng-src="{{ vm.item.picture }}" alt="">
+</div>

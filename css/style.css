@@ -1,0 +1,109 @@
+/* Empty. Add your own CSS if you like */
+.center-text {
+	text-align: center;
+	background-image: url('../img/bg1.jpg');
+	background-size: cover;
+	min-height: 120px;
+}
+
+.bg2 {
+	text-align: center;
+	background-image: url('../img/bg2.jpg');
+	background-size: cover;
+	min-height: 120px;
+}
+
+.bg3 {
+	text-align: center;
+	background-image: url('../img/bg3.jpg');
+	background-size: cover;
+	min-height: 120px;
+}
+
+.bg4 {
+	text-align: center;
+	background-image: url('../img/bg4.jpg');
+	background-size: cover;
+	min-height: 120px;
+}
+
+.bg5 {
+	text-align: center;
+	background-image: url('../img/bg5.jpg');
+	background-size: cover;
+	min-height: 120px;
+}
+
+.bg6 {
+	text-align: center;
+	background-image: url('../img/bg6.jpg');
+	background-size: cover;
+	min-height: 120px;
+}
+
+.empty {
+	text-align: center;
+	font-size: 120%;
+	font-weight: bold;
+	color: #818181;
+}
+
+.center-text img {
+	border-radius: 15%;
+	padding: 15px 0;
+}
+
+.smaller {
+	font-size: 90%;
+	color: #676767;
+}
+
+.bigger {
+	font-size: 120%;
+}
+
+.badge-pink {
+	background-color: #FFA6AA;
+	color: #fff;
+}
+
+.input-multiple {
+	max-width: 70px;
+	padding: 0 12px !important;
+}
+
+.span-multiple {
+	width: auto;
+	padding: 7px 10px;
+}
+
+.has-error {
+	border: 1px solid #cc2311;
+}
+
+.camera-icon {
+	position: relative;
+	bottom: 25px;
+	right: 40px;
+	font-size: 30px;
+}
+
+.chart {
+ height: 300px;
+ max-width: 300px;
+ margin: 0 auto;
+}
+
+.img_mh {
+	max-height: 200px;
+	width: auto !important;
+}
+
+.img-big {
+	position: absolute;
+	top:0; left:0; bottom: 0; right: 0;
+	background-color: rgba(0,0,0,.8);
+	z-index: 1000;
+	text-align: center;
+	padding-top: 50px;
+}
