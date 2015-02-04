@@ -1,4 +1,4 @@
-function WineService ($localStorage, $filter, $state, $ionicViewService, $ionicPopup, $cordovaFile) {
+function WineService ($localStorage, $filter, $state, $ionicHistory, $ionicPopup, $cordovaFile) {
   var WineService = {};
   WineService.temp = {};
   var defaultOptions = 
@@ -98,7 +98,7 @@ function WineService ($localStorage, $filter, $state, $ionicViewService, $ionicP
 			$localStorage.myWineItems.push(item);
 		}
 		// Disable back button whatever the case
-		$ionicViewService.nextViewOptions({
+		$ionicHistory.nextViewOptions({
       disableBack: true
     });
     // Redirect to home
@@ -279,7 +279,7 @@ function WineService ($localStorage, $filter, $state, $ionicViewService, $ionicP
       if(res) {
         items.splice(key, 1);
         // Disable back button whatever the case
-        $ionicViewService.nextViewOptions({
+        $ionicHistory.nextViewOptions({
           disableBack: true
         });
         // Redirect to home

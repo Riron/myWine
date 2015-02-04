@@ -16,16 +16,7 @@
       Aucun vin en cave...
     </div>
     <ion-list>
-      <!--<ion-item class="item-avatar" ng-repeat="item in vm.items | filter:vm.searchText | orderBy: vm.order" href="#/app/wines/{{item.id}}">
-        <img ng-src="{{ item.picture }}">
-        <h2>{{ item.title }} {{ item.millesime | wineTitle }}</h2>
-        <p>{{ item.producer }} - <star-rating rating="item.stars"></star-rating></p>
-        <wine-color type="item.type" number="item.number"></wine-color>
-        <ion-option-button class="button-dark" ng-click="vm.drink(item.id)">
-          - <i class="ion-wineglass"></i>
-        </ion-option-button>
-      </ion-item>-->
-      <wines-list items="vm.items" filter="vm.searchText" order="vm.order" drink="vm.drink(id)" />
+      <wines-list items="::vm.items" filter="vm.searchText" order="vm.order" drink="vm.drink(id)" />
     </ion-list>
   </ion-content>
 </ion-view>

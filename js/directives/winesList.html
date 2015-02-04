@@ -1,12 +1,12 @@
-<div ng-repeat="item in items | filter:filter">
+<div ng-repeat="item in items | filter:filter track by item.id">
 	<div class="item item-divider" ng-show="item.displayCat">
 	    {{ (item[order] | wineCategory) || 'Non classé' }}
 	</div>
 	<ion-item class="item-avatar" href="#/app/wines/{{item.id}}">
 		<img ng-src="{{ item.picture }}">
-		<h2>{{ item.title }} {{ item.millesime | wineTitle }}</h2>
-		<p>{{ item.producer }} - <star-rating rating="item.stars"></star-rating></p>
-		<wine-color type="item.type" number="item.number"></wine-color>
+		<h2>{{ ::item.title }} {{ ::item.millesime | wineTitle }}</h2>
+		<p>{{ ::item.producer }} - <star-rating rating="::item.stars"></star-rating></p>
+		<wine-color type="::item.type" number="::item.number"></wine-color>
 		<ion-option-button class="button-dark" ng-click="drink({id: item.id})">
 			- <i class="ion-wineglass"></i>
 		</ion-option-button>

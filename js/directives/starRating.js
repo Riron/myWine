@@ -2,7 +2,7 @@ function starRating() {
 	var max = 5;
 	return {
 		restrict: 'EA',
-		template: '<i class="icon ion-star bigger" ng-class="star" ng-repeat="star in stars" ng-click="toggle($index)"></i>',
+		template: '<i class="icon ion-star bigger" ng-class="star" ng-repeat="star in ::stars" ng-click="toggle($index)"></i>',
 		scope: {rating: '=', editable: '='},
 		link: function(scope, ele, attrs) {
 			scope.rating = scope.rating || 3;
