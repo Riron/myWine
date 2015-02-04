@@ -1,5 +1,5 @@
 function wineColor() {
-	var colors = {'rouge': 'assertive', 'rose': 'pink', 'blanc': 'energized'};
+	var colors = {'rouge': 'assertive', 'rose': 'pink', 'blanc': 'energized', 'autre': 'dark'};
 	return {
 		restrict: 'EA',
 		template: '<span class="badge badge-{{ color }}">{{ number }}</span>',

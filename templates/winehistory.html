@@ -20,12 +20,10 @@
 		    	<good-drink start="vm.item.best_start" end="vm.item.best_end"></good-drink>
 		    </p>
 		  </div>
-	    <div class="button-bar">
-			  <div class="button" ng-class="{'assertive': vm.item.star}" ng-click="vm.star(vm.item.id)"><i class="ion-heart"></i></div>
-			  <div class="button" ng-click="vm.drink(vm.item.id)">- <i class="ion-wineglass"></i></div>
-			  <div class="button" ng-click="vm.addBottle(vm.item.id)">+ <i class="ion-wineglass"></i></div>
-			  <div class="button" ng-click="vm.delete(vm.item.id)"><i class="ion-trash-b"></i></div>
-			</div>
+		  <div class="item item-divider">
+			<span ng-if="vm.item.number == 1">1 bouteille a été bue le {{ vm.item.date | date: 'dd/MM/yyyy' }}</span>
+			<span ng-if="vm.item.number > 1">{{ vm.item.number }} bouteilles ont été bues le {{ vm.item.date | date: 'dd/MM/yyyy' }}</span>
+		  </div>
 		  <div class="item item-body">
 		  	<h3><i class="icon ion-cash"></i> Prix : {{ vm.item.price || 'N/A' }} €</h3>
 		  	<h3><i class="icon ion-beaker"></i> Alcool : {{ vm.item.alcohol || 'N/A' }} %</h3>
@@ -33,6 +31,10 @@
 		  	<h3><i class="ion-pound"></i> Commentaires :</h3>
 		  	<p>{{ vm.item.comment || 'N/A' }}</p>
 		  </div>
+		  <a ng-click="vm.backToCave()" class="item item-icon-left">
+			  <i class="icon ion-ios7-download"></i>
+			  Réintégrer en cave
+		  </a>
 		</div>
   </ion-content>
 </ion-view>

@@ -1,109 +1,222 @@
 /* Empty. Add your own CSS if you like */
 .center-text {
-	text-align: center;
-	background-image: url('../img/bg1.jpg');
-	background-size: cover;
-	min-height: 120px;
+    text-align: center;
+    background-image: url('../img/bg1.jpg');
+    background-size: cover;
+    min-height: 120px;
 }
 
 .bg2 {
-	text-align: center;
-	background-image: url('../img/bg2.jpg');
-	background-size: cover;
-	min-height: 120px;
+    text-align: center;
+    background-image: url('../img/bg2.jpg');
+    background-size: cover;
+    min-height: 120px;
 }
 
 .bg3 {
-	text-align: center;
-	background-image: url('../img/bg3.jpg');
-	background-size: cover;
-	min-height: 120px;
+    text-align: center;
+    background-image: url('../img/bg3.jpg');
+    background-size: cover;
+    min-height: 120px;
 }
 
 .bg4 {
-	text-align: center;
-	background-image: url('../img/bg4.jpg');
-	background-size: cover;
-	min-height: 120px;
+    text-align: center;
+    background-image: url('../img/bg4.jpg');
+    background-size: cover;
+    min-height: 120px;
 }
 
 .bg5 {
-	text-align: center;
-	background-image: url('../img/bg5.jpg');
-	background-size: cover;
-	min-height: 120px;
+    text-align: center;
+    background-image: url('../img/bg5.jpg');
+    background-size: cover;
+    min-height: 120px;
 }
 
 .bg6 {
-	text-align: center;
-	background-image: url('../img/bg6.jpg');
-	background-size: cover;
-	min-height: 120px;
+    text-align: center;
+    background-image: url('../img/bg6.jpg');
+    background-size: cover;
+    min-height: 120px;
 }
 
 .empty {
-	text-align: center;
-	font-size: 120%;
-	font-weight: bold;
-	color: #818181;
+    text-align: center;
+    font-size: 120%;
+    font-weight: bold;
+    color: #818181;
 }
 
 .center-text img {
-	border-radius: 15%;
-	padding: 15px 0;
+    border-radius: 15%;
+    padding: 15px 0;
 }
 
 .smaller {
-	font-size: 90%;
-	color: #676767;
+    font-size: 90%;
+    color: #676767;
 }
 
 .bigger {
-	font-size: 120%;
+    font-size: 140%;
 }
 
 .badge-pink {
-	background-color: #FFA6AA;
-	color: #fff;
+    background-color: #FFA6AA;
+    color: #FFF;
+}
+
+.item .badge {
+    right: 20px;
 }
 
 .input-multiple {
-	max-width: 70px;
-	padding: 0 12px !important;
+    max-width: 70px;
+    padding: 0 12px !important;
 }
 
 .span-multiple {
-	width: auto;
-	padding: 7px 10px;
+    width: auto;
+    padding: 7px 10px;
 }
 
 .has-error {
-	border: 1px solid #cc2311;
+    border: 1px solid #CC2311;
 }
 
 .camera-icon {
-	position: relative;
-	bottom: 25px;
-	right: 40px;
-	font-size: 30px;
+    position: relative;
+    bottom: 25px;
+    right: 40px;
+    font-size: 30px;
 }
 
 .chart {
- height: 300px;
- max-width: 300px;
- margin: 0 auto;
+    height: 300px;
+    max-width: 300px;
+    margin: 0 auto;
 }
 
 .img_mh {
-	max-height: 200px;
-	width: auto !important;
+    max-height: 200px;
+    width: auto !important;
 }
 
 .img-big {
-	position: absolute;
-	top:0; left:0; bottom: 0; right: 0;
-	background-color: rgba(0,0,0,.8);
-	z-index: 1000;
-	text-align: center;
-	padding-top: 50px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.8);
+    z-index: 1000;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.slider {
+    height: 100%;
+}
+.slider-slide {
+    padding-top: 80px;
+    color: #000;
+    background-color: #FFF;
+    text-align: center;
+    font-weight: 300;
+}
+
+.stats-data {
+    text-align: center;
+}
+
+.stats-data i {
+    font-size: 30px;
+}
+
+.stats-data-text {
+    display: inline-block;
+    padding-left: 10px;
+}
+
+.stats-data-text span {
+    display: block;
+    font-size: 25px;
+    font-weight: bold;
+    padding-top: 5px;
+    text-align: left;
+}
+
+.form-with-btn {
+    flex: 1 0 80px !important;
+}
+
+.item-autocomplete {
+    overflow: visible;
+    position: static;
+}
+
+.autocomplete-items {
+    position: absolute;
+    z-index: 10;
+    background-color: #FFF;
+    border: solid 1px #DDD;
+}
+
+.autocomplete-item {
+    padding: 10px  5px;
+    border-bottom: solid 1px #DDD;
+}
+
+.autocomplete-item.active {
+    background-color: #DDD;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 2px;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    background-color: #FFF;
+    border: 1px solid #CCC;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+            box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    background-clip: padding-box;
+}
+
+.label-dropdown {
+    z-index: 10;
+    overflow: visible;
+}
+
+.zi-first {
+    z-index: 15;
+}
+.zi-second {
+    z-index: 14;
+}
+.zi-third {
+    z-index: 13;
+}
+
+.edit-pic {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.wine-title {
+    margin-right: 40px !important;
+}
+
+.has-error input {
+    color: #CC2311;
 }

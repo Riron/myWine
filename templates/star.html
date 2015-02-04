@@ -1,57 +1,81 @@
-<ion-view title="Ma Cave">
+<ion-view title="Ma sélection">
   <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <a class="button button-icon icon ion-plus-round" href="#/app/add"></a>
   </ion-nav-buttons>
-  <ion-content class="has-header">
+
+  <ion-tabs class="tabs-assertive tabs-icon-only">
+
+  <ion-tab title="Favoris" icon-on="ion-ios7-heart" icon-off="ion-ios7-heart-outline">
+  <ion-content has-header="true">
     <div class="padding empty" ng-if="vm.items.length == 0">
       Aucun vin en cave...
     </div>
-    <ionl-ist>
+    <div class="padding empty" ng-if="vm.starred.length == 0">
+      Aucun vin favori...
+    </div>
+    <ion-list class="has-header">
       <div class="item item-divider">
         Vins favoris
       </div>
       <ion-item class="item-avatar" ng-repeat="item in vm.starred | limitTo: 5" href="#/app/wines/{{item.id}}">
         <img ng-src="{{ item.picture }}">
-        <h2>{{ item.title }} - {{ item.millesime }}</h2>
+        <h2>{{ item.title }} {{ item.millesime | wineTitle }}</h2>
         <p>{{ item.producer }} - <star-rating rating="item.stars"></star-rating></p>
         <wine-color type="item.type" number="item.number"></wine-color>
         <ion-option-button class="button-dark" ng-click="vm.drink(item.id)">
           + <i class="ion-wineglass"></i>
         </ion-option-button>
       </ion-item>
-      <div class="padding empty" ng-if="vm.starred.length == 0">
-        Aucun vin favori...
-      </div>
-      <div class="item item-divider">
-        Mieux notés
-      </div>
-      <ion-item class="item-avatar" ng-repeat="item in vm.items | orderBy: vm.stars" href="#/app/wines/{{item.id}}">
-        <img ng-src="{{ item.picture }}">
-        <h2>{{ item.title }} - {{ item.millesime }}</h2>
-        <p>{{ item.producer }} - <star-rating rating="item.stars"></star-rating></p>
-        <wine-color type="item.type" number="item.number"></wine-color>
-        <ion-option-button class="button-dark" ng-click="vm.drink(item.id)">
-          + <i class="ion-wineglass"></i>
-        </ion-option-button>
-      </ion-item>
-      <div class="item item-divider">
-        Les vins prêts à étre bu
-      </div>
-      <ion-item class="item-avatar" ng-repeat="item in vm.ready | limitTo: 5" href="#/app/wines/{{item.id}}">
-        <img ng-src="{{ item.picture }}">
-        <h2>{{ item.title }} - {{ item.millesime }}</h2>
-        <p>{{ item.producer }} - <star-rating rating="item.stars"></star-rating></p>
-        <wine-color type="item.type" number="item.number"></wine-color>
-        <ion-option-button class="button-dark" ng-click="vm.drink(item.id)">
-          + <i class="ion-wineglass"></i>
-        </ion-option-button>
-      </ion-item>
-      <div class="padding empty" ng-if="vm.ready.length == 0">
-        Aucun vin prêt à être bu...
-      </div>
     </ion-list>
   </ion-content>
+  </ion-tab>
+
+  <ion-tab title="Mieux notés" icon-on="ion-ios7-star" icon-off="ion-ios7-star-outline">
+  <ion-content has-header="true">
+  <div class="padding empty" ng-if="vm.items.length == 0">
+    Aucun vin en cave...
+  </div>
+  <ion-list>
+    <div class="item item-divider">
+      Vins les mieux notés
+    </div>
+    <ion-item class="item-avatar" ng-repeat="item in vm.items | orderBy:'stars':true" href="#/app/wines/{{item.id}}">
+      <img ng-src="{{ item.picture }}">
+      <h2>{{ item.title }} {{ item.millesime | wineTitle }}</h2>
+      <p>{{ item.producer }} - <star-rating rating="item.stars"></star-rating></p>
+      <wine-color type="item.type" number="item.number"></wine-color>
+      <ion-option-button class="button-dark" ng-click="vm.drink(item.id)">
+        + <i class="ion-wineglass"></i>
+      </ion-option-button>
+    </ion-item>
+    </ion-list>
+  </ion-tab>
+
+  <ion-tab title="En apogée" icon-on="ion-ios7-stopwatch" icon-off="ion-ios7-stopwatch-outline">
+  <ion-content has-header="true">
+  <div class="padding empty" ng-if="vm.ready.length == 0">
+    Aucun vin prêt à boire...
+  </div>
+  <ion-list>
+    <div class="item item-divider">
+      Vins en apogée
+    </div>
+    <ion-item class="item-avatar" ng-repeat="item in vm.ready | orderBy:'best_start'" href="#/app/wines/{{item.id}}">
+      <img ng-src="{{ item.picture }}">
+      <h2>{{ item.title }}  ({{ item.best_start }} à {{ item.best_end }})</h2>
+      <p>{{ item.producer }} - <star-rating rating="item.stars"></star-rating></p>
+      <wine-color type="item.type" number="item.number"></wine-color>
+      <ion-option-button class="button-dark" ng-click="vm.drink(item.id)">
+        + <i class="ion-wineglass"></i>
+      </ion-option-button>
+    </ion-item>
+    </ion-list>
+  </ion-content>
+  </ion-tab>
+
+  </ion-tabs>
+      
 </ion-view>

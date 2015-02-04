@@ -1,6 +1,6 @@
 <ion-view title="Options">
   <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
   </ion-nav-buttons>
   <ion-content class="has-header">
     <div class="bg2">
@@ -12,19 +12,54 @@
             <h2>Classer les vins par</h2>
             <p>Paramétrage de l'affichage</p>
           </div>
-          <select ng-model="vm.order" ng-change="vm.setOrder()">
+          <select ng-model="vm.order" ng-change="vm.setOrder()" analytics-on="click" analytics-event="Options-SetOrder" analytics-category="Options">
             <option value="" selected>Date d'ajout</option>
+            <option value="name">Nom</option>
             <option value="type">Couleur</option>
             <option value="millesime">Millésime</option>
+            <option value="region">Région</option>
+            <option value="place">Emplacement</option>
+            <option value="number">Quantité</option>
           </select>
         </label>
+        <!--li class="item item-button-right" ng-click="vm.login()">
+          <h2>Sauvegarde cloud</h2>
+          <p>Sauvegarder l'ensemble de votre cave dans le cloud. Cela vous permet de la récupérer par la suite sur d'autres appareils mobiles, ainsi que d'assurer la conservation de vos données</p>
+          <button class="button button-positive" ng-click="vm.login()">
+            <i class="icon ion-cloud"></i>
+          </button>
+        </li>-->
         <li class="item item-button-right">
           <h2>Réinitialiser la cave</h2>
           <p>Attention, suppression définitive</p>
-          <button class="button button-positive" ng-click="vm.clearData()">
+          <button class="button button-positive" ng-click="vm.clearData()" analytics-on="click" analytics-event="Options-Reset" analytics-category="Options">
             <i class="icon ion-trash-a"></i>
           </button>
         </li>
+
+        <li class="item item-button-right">
+          <h2>Export CSV</h2>
+          <p>Export de l'ensemble de la cave vers un format Excel</p>
+          <button class="button button-positive" ng-click="vm.exportCSV()" analytics-on="click" analytics-event="Options-Export" analytics-category="Options">
+            <i class="ion-forward"></i>
+          </button>
+        </li>
+        <li class="item item-button-right">
+          <h2>Import CSV</h2>
+          <p>Importer un fichier CSV compatible. <br><i class="assertive ion-alert-circled"></i> Fonctionnalité en Béta !</p>
+          <input type="file" fileread="filePath" name="csv-import">
+          <button class="button button-positive" ng-click="vm.importCSV(filePath)" analytics-on="click" analytics-event="Options-Import" analytics-category="Options">
+            <i class="ion-reply"></i>
+          </button>
+        </li>
+      </ul>
+
+      <ul class="list">
+        <div class="item item-divider">
+        <h2>Gestion les champs de saisie</h2>
+        <p>Activation / Désactivation de champs</p>
+        </div>
+        <ion-toggle ng-model="field.checked" toggle-class="toggle-assertive" ng-repeat="field in vm.fields">{{ field.text }}</ion-toggle>
       </ul>
     </div>
   </ion-content>

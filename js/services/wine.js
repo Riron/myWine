@@ -1,10 +1,31 @@
 function WineService ($localStorage, $filter, $state, $ionicViewService, $ionicPopup, $cordovaFile) {
   var WineService = {};
   WineService.temp = {};
-  var order = '';
-  var colors = {'blanc': 'White Wine', 'rouge': 'Red Wine', 'rose': 'Rosé Wine'};
+  var defaultOptions = 
+    {order: '', fields: {
+      country: {text: 'Pays', checked: false }, 
+      alcohol: {text: '° d\'alcool', checked: true }, 
+      place: {text: 'Emplacement en cave', checked: true },
+      volume: {text: 'Contenace', checked: false },
+      cuvee: {text: 'Cuvée', checked: false }
+    }};
+
+  $localStorage.myWineOptions = $localStorage.myWineOptions || defaultOptions;
+    
+  var options = $localStorage.myWineOptions;
+  var colors = {'blanc': 'White Wine', 'rouge': 'Red Wine', 'rose': 'Rosé Wine', 'autre': 'Autre'};
   var date = new Date();
   date = date.getFullYear();
+
+  /*********************
+  UPGRADE
+  *********************/
+  (function() {
+    // New fields to default options
+    if(angular.isDefined(options) && Object.keys(options.fields).length < Object.keys(defaultOptions.fields).length) {
+      $localStorage.myWineOptions = defaultOptions;
+    }
+  })();
 
   var getKey = function(obj, value){
     for(var key in obj){
@@ -15,13 +36,36 @@ function WineService ($localStorage, $filter, $state, $ionicViewService, $ionicP
     return null;
   };
 
+  var sameDayBetweenDates = function(first, second) {
+    first = new Date(first);
+    second = new Date(second);
+    if(first.getFullYear() === second.getFullYear() && first.getMonth() === second.getMonth() && first.getDay() === second.getDay()) {
+      return true;
+    }
+    return false;
+  }
+
   WineService.getWines = function() {
-  	return $localStorage.myWineItems || [];
+    return $localStorage.myWineItems || [];
+  };
+
+  WineService.getHistoryWines = function() {
+    $localStorage.myWineHistory = $localStorage.myWineHistory || [];
+  	return $localStorage.myWineHistory;
   };
 
   WineService.getWine = function(id) {
     if(id != 0) {
       return $filter('filter')($localStorage.myWineItems, function (i) {return i.id == id;})[0]; 
+    }
+    var res = WineService.temp;
+    WineService.temp = {};
+    return res;
+  };
+
+  WineService.getHistoryWine = function(id) {
+    if(id != 0) {
+      return $filter('filter')($localStorage.myWineHistory, function (i) {return i.idHistory == id;})[0]; 
     }
     var res = WineService.temp;
     WineService.temp = {};
@@ -34,13 +78,16 @@ function WineService ($localStorage, $filter, $state, $ionicViewService, $ionicP
 
   WineService.getReadyWines = function() {
     var before =  $filter('filter')($localStorage.myWineItems, function (i) {return i.best_start <= date;}) || [];
-    console.log(before);
     return $filter('filter')(before, function (i) {return i.best_end >= date;}) || []
-  }
+  };
+
+  WineService.getFieldsOptions = function() {
+    return options.fields;
+  };
 
   WineService.save = function (item, id) {
   	$localStorage.myWineItems = $localStorage.myWineItems || [];
-		item.id = item.id || $localStorage.myWineItems.length + 1;
+		item.id = item.id || Math.random().toString(36).substr(2, 9);
 		// If item already exist, retrive position and modify
 		if(id) {
 			index = $localStorage.myWineItems.indexOf(item);
@@ -58,17 +105,103 @@ function WineService ($localStorage, $filter, $state, $ionicViewService, $ionicP
 		$state.go('app.wines');
   };
 
+  WineService.backToCave = function (item) {
+    var item = WineService.getHistoryWine(item.idHistory);
+    var caveItem = WineService.getWine(item.id);
+
+    if(angular.isUndefined(caveItem)) {
+      var alertPopup = $ionicPopup.alert({
+        title: 'Erreur',
+        template: 'Ce vin n\'existe plus dans la cave'
+      });
+    }
+    else {
+      if(item.number > 0) {
+        var confirmPopup = $ionicPopup.confirm({
+          title: 'Réintégrer une bouteille',
+          template: 'Confirmez-vous votre choix ?'
+        });
+        confirmPopup.then(function(res) {
+          if(res) {
+            item.number--;
+            caveItem.number++;
+            WineService.clearHistory();
+          }
+        });
+      }
+      else {
+        var alertPopup = $ionicPopup.alert({
+          title: 'Réserve épuisée',
+          template: 'Plus aucun vin de ce type dans l\'historique'
+        });
+      }
+    }
+  };
+
   WineService.drink = function(id) {
   	var item = WineService.getWine(id);
-  	var confirmPopup = $ionicPopup.confirm({
-			title: 'Sortir une bouteille',
-			template: 'Confirmez-vous votre choix ?'
-		});
-		confirmPopup.then(function(res) {
-			if(res) {
-				item.number--;
-			}
-		});
+    if(item.number > 0) {
+      var confirmPopup = $ionicPopup.confirm({
+        title: 'Sortir une bouteille',
+        template: 'Confirmez-vous votre choix ?'
+      });
+      confirmPopup.then(function(res) {
+        if(res) {
+          item.number--;
+          WineService.addToHistory(item);
+        }
+      });
+    }
+    else {
+    	var alertPopup = $ionicPopup.alert({
+        title: 'Réserve épuisée',
+        template: 'Aucun vin de ce type en stock...'
+      });
+    }
+  };
+
+  WineService.addToHistory = function(w) {
+    var wine = angular.copy(w);
+    var wines = WineService.getHistoryWines();
+    var addWineToExistingObject = false;
+
+    angular.forEach(wines, function(value, key) {
+      var sameDay = sameDayBetweenDates(Date.now(), value.date);
+      if(sameDay && value.title === wine.title) {
+        addWineToExistingObject = true;
+        value.number++;
+      }
+    });
+
+    if(!addWineToExistingObject) {
+      wine.number = 1;
+      wine.date = Date.now();
+      wine.idHistory = new Date().getTime();
+      $localStorage.myWineHistory.push(wine);
+    }
+  }
+
+  WineService.clearHistory = function () {
+    var items = WineService.getHistoryWines();
+    angular.forEach(items, function (value, key) {
+      if(value.number == 0) {
+        items.splice(key,1);
+        $state.go('app.history');
+      }
+    });
+  }
+
+  WineService.addBottle = function(id) {
+    var item = WineService.getWine(id);
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'Ajouter une bouteille',
+      template: 'Confirmez-vous votre choix ?'
+    });
+    confirmPopup.then(function(res) {
+      if(res) {
+        item.number++;
+      }
+    });
   };
 
   WineService.clear = function() {
@@ -84,25 +217,19 @@ function WineService ($localStorage, $filter, $state, $ionicViewService, $ionicP
   };
 
   WineService.getStats = function() {
-  	var stats = {'red': 0, 'rose': 0, 'blanc': 0, 'red_b': 0, 'rose_b': 0, 'blanc_b': 0};
+    var stats = {'types': {}, 'bottles': {}, 'price': {}};
   	var items = WineService.getWines();
   	stats.wine_nb = items.length;
 
   	angular.forEach(items, function(value, key) {
-  		if(value.type == 'rouge') {
-  			stats.red++;
-  			stats.red_b += value.number;
-  		}
-  		else if(value.type == 'rose') {
-  			stats.rose++;
-  			stats.rose_b += value.number;
-  		}
-  		else if(value.type == 'blanc') {
-  			stats.blanc++;
-  			stats.blanc_b += value.number;
-  		}
+      stats.types[value.type] = stats.types[value.type]++ || 1;
+      stats.bottles[value.type] = (stats.bottles[value.type]+value.number) || value.number;
+      stats.price[value.type] = (stats.price[value.type]+value.price*value.number) || value.price*value.number;
   	});
 
+    stats.bottles['blanc'] = stats.bottles['blanc'] || 0;
+    stats.bottles['rouge'] = stats.bottles['rouge'] || 0;
+    stats.bottles['rose'] = stats.bottles['rose'] || 0;
   	return stats;
   }
 
@@ -133,11 +260,11 @@ function WineService ($localStorage, $filter, $state, $ionicViewService, $ionicP
   }
 
   WineService.getOrder = function() {
-    return order;
+    return options.order;
   }
 
   WineService.setOrder = function(o) {
-    order = o;
+    options.order = o;
   }
 
   WineService.deleteWine = function(id) {

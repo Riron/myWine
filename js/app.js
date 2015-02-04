@@ -1,4 +1,4 @@
-angular.module('myWine', ['ionic', 'ngStorage', 'ngCordova', 'angularCharts'])
+angular.module('myWine', ['ionic', 'ngStorage', 'ngCordova', 'angularCharts', 'firebase', 'ui.bootstrap', 'angulartics', 'angulartics.google-analytics-plugin'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -13,8 +13,17 @@ angular.module('myWine', ['ionic', 'ngStorage', 'ngCordova', 'angularCharts'])
     }
   });
 })
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, googleAnalyticsPluginProvider) {
+  googleAnalyticsPluginProvider.debug = true;
+  googleAnalyticsPluginProvider.trackingId = 'UA-58168431-1';
+
   $stateProvider
+
+    .state('intro', {
+      url: "/intro",
+      templateUrl: "templates/intro.html",
+      controller: 'IntroCtrl'
+    })
 
     .state('app', {
       url: "/app",
@@ -48,6 +57,15 @@ angular.module('myWine', ['ionic', 'ngStorage', 'ngCordova', 'angularCharts'])
         'menuContent' :{
           templateUrl: "templates/stats.html",
           controller: 'StatsCtrl as vm'
+        }
+      }
+    })
+    .state('app.history', {
+      url: "/history",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/history.html",
+          controller: 'HistoryCtrl as vm'
         }
       }
     })
@@ -103,6 +121,15 @@ angular.module('myWine', ['ionic', 'ngStorage', 'ngCordova', 'angularCharts'])
         'menuContent' :{
           templateUrl: "templates/wine.html",
           controller: 'WineCtrl as vm'
+        }
+      }
+    })
+    .state('app.historyItem', {
+      url: "/history/:wineId",
+      views: {
+        'menuContent' :{
+          templateUrl: "templates/winehistory.html",
+          controller: 'WineHistoryCtrl as vm'
         }
       }
     });

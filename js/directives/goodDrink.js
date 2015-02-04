@@ -3,7 +3,7 @@ function goodDrink() {
 	date = date.getFullYear();
 	return {
 		restrict: 'EA',
-		template: '<i class="icon {{ class }}"></i> A boire entre {{ start }} et {{ end }}',
+		template: '<i class="icon {{ class }}"></i> A boire entre {{ start || "?" }} et {{ end || "?" }}',
 		scope: {start: '=', end: '='},
 		link: function(scope, ele, attrs) {
 			if(scope.start <= date && scope.end >= date ) {

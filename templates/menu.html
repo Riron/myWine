@@ -7,28 +7,31 @@
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-pane>
 
-  <ion-side-menu side="left">
+  <ion-side-menu expose-aside-when="large">
     <header class="bar bar-header bar-dark">
       <h1 class="title">Menu</h1>
     </header>
     <ion-content class="has-header">
       <ion-list>
-        <ion-item nav-clear menu-close href="#/app/wines">
+        <ion-item nav-clear menu-close href="#/app/wines" analytics-on="click" analytics-event="Menu-MaCave" analytics-category="Menu">
           Ma cave
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/star">
-          Mes favoris
+        <ion-item nav-clear menu-close href="#/app/star" analytics-on="click" analytics-event="Menu-Selection" analytics-category="Menu">
+          Ma sélection
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/stats">
+        <ion-item nav-clear menu-close href="#/app/stats" analytics-on="click" analytics-event="Menu-Stats" analytics-category="Menu">
           Statistiques
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/options">
+        <ion-item nav-clear menu-close href="#/app/history" analytics-on="click" analytics-event="Menu-History" analytics-category="Menu">
+          Historique
+        </ion-item>
+        <ion-item nav-clear menu-close href="#/app/options" analytics-on="click" analytics-event="Menu-Options" analytics-category="Menu">
           Options
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/search">
+        <ion-item nav-clear menu-close href="#/app/search" analytics-on="click" analytics-event="Menu-Recherche" analytics-category="Menu">
           Recherche de vin
         </ion-item>
-        <ion-item nav-clear menu-close href="#/app/about">
+        <ion-item nav-clear menu-close href="#/app/about" analytics-on="click" analytics-event="Menu-APropos" analytics-category="Menu">
           A propos
         </ion-item>
       </ion-list>

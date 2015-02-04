@@ -1,0 +1,7 @@
+<input type="text" ng-model="ngModel" name="{{ name }}" placeholder="{{ placeholder }}" ng-keydown="selected=false" />
+ 
+<div class="autocomplete-items" ng-hide="!ngModel.length || selected">
+  <div class="autocomplete-item" ng-repeat="item in items | filter:ngModel | limitTo: 5 track by $index" ng-click="handleSelection(item)" style="cursor:pointer" ng-class="{active:isCurrent($index)}" ng-mouseenter="setCurrent($index)">
+    <p>{{ item }}</p>
+  </div>
+</div>

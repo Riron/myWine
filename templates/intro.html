@@ -1,0 +1,39 @@
+<ion-nav-bar class="nav-title-slide-ios7 bar-assertive">
+  <ion-nav-back-button class="button-icon ion-arrow-left-c">
+  </ion-nav-back-button>
+</ion-nav-bar>
+<ion-view>
+	<ion-nav-buttons side="left">
+    <button class="button button-light button-clear no-animation"
+            ng-click="startApp()" ng-if="!slideIndex">
+      Passer l'intro
+    </button>
+    <button class="button button-light button-clear no-animation icon-left ion-chevron-left"
+            ng-click="previous()" ng-if="slideIndex > 0">
+      Précédent
+    </button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right"> 
+    <button class="button button-light button-clear no-animation icon-right ion-chevron-right"
+            ng-click="next()" ng-if="slideIndex != 2">
+      Suivant
+    </button>
+    <button class="button button-light button-clear no-animation"
+            ng-click="startApp()" ng-if="slideIndex == 2">
+      Commencer !
+    </button>
+  </ion-nav-buttons>
+		<ion-slide-box on-slide-changed="slideHasChanged($index)">
+		  <ion-slide>
+		    <div class="box blue"><h3>Bienvenue sur myWine !</h3></div>
+		    <img src="img/logo.png">
+		    <p>Cette introduction va vous présenter brièvement comment tirer parti au mieux des fonctionnalités de myWine</p>
+		  </ion-slide>
+		  <ion-slide>
+		    <div class="box yellow"><h1>YELLOW</h1></div>
+		  </ion-slide>
+		  <ion-slide>
+		    <div class="box pink"><h1>PINK</h1></div>
+		  </ion-slide>
+		</ion-slide-box>
+</ion-view>

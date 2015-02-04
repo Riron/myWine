@@ -1,0 +1,18 @@
+<ion-view title="Historique de consommation">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon" ng-hide="$exposeAside.active"></button>
+  </ion-nav-buttons>
+  <ion-content class="has-header">
+    <div class="padding empty" ng-if="vm.items.length == 0">
+      Aucun vin n'a encore été bu.
+    </div>
+    <ion-list>
+      <ion-item class="item-avatar" ng-repeat="item in vm.items | filter:searchText | orderBy: '-date'" href="#/app/history/{{item.idHistory}}">
+        <img ng-src="{{ item.picture }}">
+        <h2>{{ item.title }} {{ item.millesime | wineTitle }}</h2>
+        <p>Bu le {{ item.date | date: 'dd/MM/yyyy' }} - <star-rating rating="item.stars"></star-rating></p>
+        <wine-color type="item.type" number="item.number"></wine-color>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

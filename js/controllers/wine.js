@@ -9,6 +9,10 @@ function WineCtrl($stateParams, WineService) {
 		WineService.drink(id);
 	}
 
+	vm.addBottle = function(id) {
+		WineService.addBottle(id);
+	}
+
 	vm.star = function(id) {
 		WineService.star(id);
 	}

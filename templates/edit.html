@@ -2,31 +2,35 @@
   <ion-content class="has-header">
 	  <div class="center-text padding">
 	  	<div>
-	    <img ng-src="{{ vm.item.picture }}" ng-click="vm.takePicture()">
-	    <i class="ion-camera camera-icon" ng-click="vm.takePicture()"></i>
+	    <img ng-src="{{ vm.item.picture }}" ng-click="vm.showPictureChoicePopup()" class="edit-pic">
+	    <i class="ion-camera camera-icon" ng-click="vm.showPictureChoicePopup()"></i>
 	    </div>
 	  </div>
-	  <form name="wineForm" ng-submit="vm.addWine(wineForm.$valid)" novalidate>
+	  <form name="wineForm" novalidate>
 		  <div class="list">
 		  	<div class="item item-divider">
 			    Informations
 			  </div>
-			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.name.$invalid && !wineForm.name.$pristine }">
+			  <span class="item item-input label-dropdown zi-first" ng-class="{ 'has-error' : wineForm.name.$invalid && !wineForm.name.$pristine }">
 			    <span class="input-label">Nom*</span>
-			    <input type="text" placeholder="Un Chateau" ng-model="vm.item.title" title="name" required>
-			  </label>
-			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.producer.$invalid && !wineForm.producer.$pristine }">
+			    <input type="text" placeholder="Un Chateau" ng-model="vm.item.title" title="name" required typeahead="item.title as item.title for item in vm.items | filter:{title: $viewValue} | limitTo:8">
+			  </span>
+			  <span class="item item-input label-dropdown zi-second" ng-class="{ 'has-error' : wineForm.producer.$invalid && !wineForm.producer.$pristine }">
 			    <span class="input-label">Domaine*</span>
-			    <input type="text" placeholder="Le Grand Vin" ng-model="vm.item.producer" name="producer" required>
-			  </label>
-			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.appellation.$invalid && !wineForm.appellation.$pristine }">
+			    <input type="text" placeholder="Le Grand Vin" ng-model="vm.item.producer" name="producer" required typeahead="item.producer as item.producer for item in vm.items | filter:{producer: $viewValue} | limitTo:8">
+			  </span>
+			  <span class="item item-input label-dropdown zi-third" ng-class="{ 'has-error' : wineForm.appellation.$invalid && !wineForm.appellation.$pristine }">
 			    <span class="input-label">Appellation</span>
-			    <input type="text" placeholder="Grand cru" ng-model="vm.item.appellation" name="appellation">
-			  </label>
-				<label class="item item-input" ng-class="{ 'has-error' : wineForm.region.$invalid && !wineForm.region.$pristine }">
+			    <input type="text" placeholder="Grand cru" ng-model="vm.item.appellation" name="appellation" typeahead="item.appellation as item.appellation for item in vm.items | filter:{appellation: $viewValue} | limitTo:8">
+			  </span>
+			  <span class="item item-input item-autocomplete" ng-class="{ 'has-error' : wineForm.country.$invalid && !wineForm.country.$pristine }" ng-if="vm.fields.country.checked">
+			    <span class="input-label">Pays</span>
+			    <auto-complete items="vm.data.country" type="text" placeholder="France" ng-model="vm.item.country" name="country">
+			  </span>
+			  <span class="item item-input item-autocomplete" ng-class="{ 'has-error' : wineForm.region.$invalid && !wineForm.region.$pristine }">
 			    <span class="input-label">Région</span>
-			    <input type="text" placeholder="Alsace" ng-model="vm.item.region" name="region">
-			  </label>
+			    <auto-complete items="vm.data.region" type="text" placeholder="Alsace" ng-model="vm.item.region" name="region">
+			  </span>
 			  <label class="item item-input item-select">
 			    <div class="input-label">
 			      Couleur*
@@ -35,20 +39,23 @@
 			      <option value="rouge">Rouge</option>
 			      <option value="rose">Rosé</option>
 			      <option value="blanc">Blanc</option>
+			      <option value="autre">Autre</option>
 			    </select>
 			  </label>
 			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.millesime.$invalid && !wineForm.millesime.$pristine }">
 			    <span class="input-label">Millesime</span>
 			    <input type="tel" placeholder="2014" ng-model="vm.item.millesime" name="millesime">
 			  </label>
-				<label class="item item-input" ng-class="{ 'has-error' : wineForm.number.$invalid && !wineForm.number.$pristine }">
+				<span class="item item-input" ng-class="{ 'has-error' : wineForm.number.$invalid && !wineForm.number.$pristine }">
 			    <span class="input-label">Quantité*</span>
-			    <input type="number" placeholder="1" ng-model="vm.item.number" required name="number">
-			  </label>
-			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.cepage.$invalid && !wineForm.cepage.$pristine }">
+			    <a class="button icon ion-minus" ng-click="vm.changeQuantity(-1)"></a>
+			    <input type="number" placeholder="1" ng-model="vm.item.number" required name="number" class="form-with-btn">
+					<a class="button icon ion-plus" ng-click="vm.changeQuantity(1)"></a>
+			  </span>
+			  <span class="item item-input label-dropdown" ng-class="{ 'has-error' : wineForm.cepage.$invalid && !wineForm.cepage.$pristine }">
 			    <span class="input-label">Cépage</span>
-			    <input type="text" placeholder="Raisin" ng-model="vm.item.cepage" name="cepage">
-			  </label>
+			    <input type="text" placeholder="Raisin" ng-model="vm.item.cepage" name="cepage" typeahead="item.cepage as item.cepage for item in vm.items | filter:{cepage: $viewValue} | limitTo:8">
+			  </span>
 				<div class="item item-divider">
 			    Divers
 			  </div>
@@ -56,16 +63,28 @@
 			    <span class="input-label">Prix (€)</span>
 			    <input type="number" step="any" placeholder="10€" ng-model="vm.item.price" name="price">
 			  </label>
-			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.best.$invalid && !wineForm.best.$pristine }">
-			    <span class="input-label">A consommer de</span>
-				  <input type="number" min="2000" max="2100" class="input-multiple" placeholder="2014" name="best" ng-model="vm.item.best_start">
+			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.cuvee.$invalid && !wineForm.cuvee.$pristine }" ng-if="vm.fields.cuvee.checked">
+			    <span class="input-label">Cuvée</span>
+			    <input type="text" placeholder="2014" ng-model="vm.item.cuvee" name="cuvee">
+			  </label>
+			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.volume.$invalid && !wineForm.volume.$pristine }" ng-if="vm.fields.volume.checked">
+			    <span class="input-label">Contenance</span>
+			    <input type="text" placeholder="75cl" ng-model="vm.item.volume" name="volume">
+			  </label>
+			  <span class="item item-input" ng-class="{ 'has-error' : wineForm.best.$invalid && !wineForm.best.$pristine }">
+			    <span class="input-label">Apogée</span>
+				  <input type="number" min="1800" max="3000" class="input-multiple" placeholder="2014" name="best" ng-model="vm.item.best_start">
 				  <span class="input-label span-multiple">à</span>
 			    <input type="number" min="2000" max="2100" class="input-multiple" placeholder="2015" name="best" ng-model="vm.item.best_end">
-			  </label>
-			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.alcohol.$invalid && !wineForm.alcohol.$pristine }">
+			  </span>
+			  <label class="item item-input" ng-class="{ 'has-error' : wineForm.alcohol.$invalid && !wineForm.alcohol.$pristine }" ng-if="vm.fields.alcohol.checked">
 			    <span class="input-label">Degré d'alcool (%)</span>
-			    <input type="number" step="any" placeholder="10" ng-model="vm.item.alcohol" name="alcohol">
+			    <input type="tel" placeholder="10.3" ng-model="vm.item.alcohol" name="alcohol">
 			  </label>
+			  <span class="item item-input label-dropdown" ng-class="{ 'has-error' : wineForm.place.$invalid && !wineForm.place.$pristine }" ng-if="vm.fields.place.checked">
+			    <span class="input-label">Emplacement</span>
+			    <input type="text" placeholder="Etagère 2" ng-model="vm.item.place" name="place" typeahead="item.place as item.place for item in vm.items | filter:{place: $viewValue} | limitTo:8">
+			  </span>
 			  <label class="item item-input item-stacked-label">
 			    <span class="input-label">Commentaires</span>
 			    <textarea name="comment" ng-model="vm.item.comment" placeholder="Commentaires / avis"></textarea>
@@ -78,9 +97,9 @@
 			  </li>
 			  <ion-toggle ng-model="vm.item.star" toggle-class="toggle-assertive">Vin favori</ion-toggle>
 			  <div class="padding">
-					<button class="button button-block button-assertive" type="submit" ng-disabled="wineForm.$invalid" >
+					<a class="button button-block button-assertive" type="submit" ng-disabled="wineForm.$invalid" ng-click="vm.addWine(wineForm.$valid)">
 					  Enregistrer
-					</button>
+					</a>
 				</div>
 			</form>
 		</div>
