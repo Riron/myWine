@@ -8,7 +8,7 @@
   <ion-content class="has-header">
     <div class="bar bar-header item-input-inset">
       <label class="item-input-wrapper">
-        <i class="icon ion-ios7-search placeholder-icon"></i>
+        <i class="icon ion-ios-search placeholder-icon"></i>
         <input type="search" placeholder="Recherche" ng-model="vm.searchText" analytics-on="click" analytics-event="Search" analytics-category="Wines">
       </label>
     </div>
@@ -16,7 +16,7 @@
       Aucun vin en cave...
     </div>
     <ion-list>
-      <wines-list items="::vm.items" filter="vm.searchText" order="vm.order" drink="vm.drink(id)" />
+      <wines-list items="vm.items" filter="vm.searchText" order="vm.order" drink="vm.drink(id)" />
     </ion-list>
   </ion-content>
 </ion-view>

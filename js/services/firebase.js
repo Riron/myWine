@@ -1,6 +1,6 @@
 function FirebaseService($http, $firebase, $firebaseSimpleLogin, $rootScope, WineService) {
   var FirebaseService = {};
-	var firebaseRef = new Firebase("https://mywine.firebaseio.com/");
+	/*var firebaseRef = new Firebase("https://mywine.firebaseio.com/");
 
 	// Create a Firebase Simple Login object
 	FirebaseService.auth = $firebaseSimpleLogin(firebaseRef);
@@ -18,7 +18,7 @@ function FirebaseService($http, $firebase, $firebaseSimpleLogin, $rootScope, Win
 
   FirebaseService.getOnline = function() {
   	var data = sync.$asArray();
-  }
+  }*/
 
   return FirebaseService;
 }
