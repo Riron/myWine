@@ -13,7 +13,11 @@ angular.module('myWine', ['ionic', 'ngStorage', 'ngCordova', 'angularCharts', 'f
     }
   });
 })
-.config(function($stateProvider, $urlRouterProvider, googleAnalyticsPluginProvider) {
+.config(function($stateProvider, $urlRouterProvider, googleAnalyticsPluginProvider, $ionicConfigProvider) {
+  if(ionic.Platform.isAndroid()) {
+    //$ionicConfigProvider.scrolling.jsScrolling(false);
+  }
+
   googleAnalyticsPluginProvider.debug = true;
   googleAnalyticsPluginProvider.trackingId = 'UA-58168431-1';
 

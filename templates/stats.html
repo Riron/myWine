@@ -5,7 +5,8 @@
 
   <ion-tabs class="tabs-assertive tabs-icon-only">
 
-    <ion-tab title="Chiffres" icon-on="ion-ios7-information" icon-off="ion-ios7-information-outline">
+    <ion-tab title="Chiffres" icon-on="ion-ios-information" icon-off="ion-ios-information-outline">
+    <ion-view>
       <ion-content class="has-header">
       <div class="bg4">
       </div>
@@ -38,9 +39,11 @@
         </div>
       </div>
       </ion-content>
+      </ion-view>
     </ion-tab>
 
-    <ion-tab title="Graphs" icon-on="ion-ios7-pulse-strong" icon-off="ion-ios7-pulse">
+    <ion-tab title="Graphs" icon-on="ion-ios-pulse-strong" icon-off="ion-ios-pulse">
+    <ion-view>
       <ion-content class="has-header">
         <div class="bg4">
         </div>
@@ -51,9 +54,10 @@
           <div ac-chart="'pie'" ac-data="vm.data_1" ac-config="vm.config_1" class='chart'></div>
         </div>
       </ion-content>
+      </ion-view>
     </ion-tab>
 
-    <!--<ion-tab title="Settings" icon-on="ion-ios7-gear" icon-off="ion-ios7-gear-outline">
+    <!--<ion-tab title="Settings" icon-on="ion-ios-gear" icon-off="ion-ios-gear-outline">
       <ion-content class="has-header">
         <div class="bg4">
         </div>

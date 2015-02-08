@@ -46,7 +46,7 @@ function WineService ($localStorage, $filter, $state, $ionicHistory, $ionicPopup
   }
 
   WineService.getWines = function() {
-    return $localStorage.myWineItems || [];
+    return angular.copy($localStorage.myWineItems) || [];
   };
 
   WineService.getHistoryWines = function() {
@@ -260,7 +260,7 @@ function WineService ($localStorage, $filter, $state, $ionicHistory, $ionicPopup
   }
 
   WineService.getOrder = function() {
-    return options.order;
+    return angular.copy(options.order);
   }
 
   WineService.setOrder = function(o) {

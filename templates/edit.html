@@ -97,6 +97,9 @@
 			  </li>
 			  <ion-toggle ng-model="vm.item.star" toggle-class="toggle-assertive">Vin favori</ion-toggle>
 			  <div class="padding">
+			  		<p class="assertive stats-data" ng-show="wineForm.$invalid">
+			  			<i class="ion-alert-circled"></i> Certains champs sont invalides !
+			  		</p>
 					<a class="button button-block button-assertive" type="submit" ng-disabled="wineForm.$invalid" ng-click="vm.addWine(wineForm.$valid)">
 					  Enregistrer
 					</a>
